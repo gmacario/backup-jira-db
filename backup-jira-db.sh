@@ -3,8 +3,10 @@
 set -x
 set -e
 
-# SOURCEDIR='//vega10.arol.locale/r&d'
-CONTAINER_ID="hopeful_hermann"
+# CID="hopeful_hermann"
+CID=$(docker ps | awk '/atlassian-jira-software/ {print $1}')
+echo "DEBUG: CID=${CID}"
+
 DESTDIR='bk-itmgmacariow7-jira'
 
 if [ ! -e "${DESTDIR}" ]; then
@@ -18,7 +20,7 @@ NOW=$(date '+%Y-%m-%d %H:%M:%S')
 cd "${DESTDIR}"
 
 # See https://github.com/nabeken/docker-volume-container-rsync
-docker exec "${CONTAINER_ID}" sh -c "id; id; du -sh data export"
+docker exec "${CID}" sh -c "id; id; du -sh data export"
 
 # TODO: rsync -avz "${SOURCEDIR}" .
 git add -A
