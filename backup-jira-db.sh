@@ -23,6 +23,7 @@ cd "${DESTDIR}"
 docker exec "${CID}" sh -c "id; id; du -sh data export"
 
 # TODO: rsync -avz "${SOURCEDIR}" .
+find . -type f -exec chmod -x {} \;
 git add -A
 git commit -m "Mirrored on ${NOW}
 
