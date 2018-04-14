@@ -17,13 +17,10 @@ if [ ! -e "${DESTDIR}" ]; then
 fi
 
 NOW=$(date '+%Y-%m-%d %H:%M:%S')
-TARBALL="${DESTDIR}-$(date '+%Y%m%d-%H%M').tar.gz"
 cd "${DESTDIR}"
 
 docker exec "${JIRA_CID}" sh -c "id; pwd; du -sh data export"
-docker exec "${JIRA_CID}" sh -c "tar cvfz - data export" >"${TARBALL}"
-ls -ls "${TARBALL}"
-sha256sum "${TARBALL}"
+docker exec "${JIRA_CID}" sh -c "tar cfz - data export" | tar xvfz -
 
 # TODO: See https://github.com/nabeken/docker-volume-container-rsync
 # RSYNC_CID=$(docker run -d -p 10873:873 nabeken/docker-volume-container-rsync:latest)
