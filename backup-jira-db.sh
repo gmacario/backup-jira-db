@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+# set -x
 set -e
 
 # JIRA_CID="hopeful_hermann"
@@ -33,9 +33,10 @@ docker exec "${JIRA_CID}" sh -c "tar cfz - data export" | tar xvfz -
 
 find . -type f -exec chmod -x {} \;
 git add -A
-git commit -m "Mirrored on ${NOW}
+git commit -m "Created with backup-jira-db.sh
 
-SOURCEDIR=${SOURCEDIR}"
+MIRROR_DATE=${NOW}
+JIRA_CID=${JIRA_CID}"
 
 # Fix file mode
 find . -type f -exec chmod -x {} \;
