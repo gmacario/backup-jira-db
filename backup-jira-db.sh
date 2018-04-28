@@ -7,7 +7,8 @@ set -e
 JIRA_CID=$(docker ps | awk '/atlassian-jira-software/ {print $1}')
 echo "DEBUG: JIRA_CID=${JIRA_CID}"
 
-DESTDIR='bk-itmgmacariow7-jira'
+DESTDIR="backups/$(hostname)"
+echo "DEBUG: DESTDIR=${DESTDIR}"
 
 if [ ! -e "${DESTDIR}" ]; then
     mkdir "${DESTDIR}"
@@ -36,7 +37,8 @@ git add -A
 git commit -m "Created with backup-jira-db.sh
 
 MIRROR_DATE=${NOW}
-JIRA_CID=${JIRA_CID}"
+JIRA_CID=${JIRA_CID}
+DESTDIR=${DESTDIR}"
 
 # Fix file mode
 find . -type f -exec chmod -x {} \;

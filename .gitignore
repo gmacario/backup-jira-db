@@ -1,6 +1,6 @@
 # Project: backup-jira-db
 # File: .gitignore
  
-bk-itmgmacariow7-jira/
+backups/
 
 # EOF
