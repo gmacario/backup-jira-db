@@ -11,7 +11,8 @@ DESTDIR="backups/$(hostname)"
 echo "DEBUG: DESTDIR=${DESTDIR}"
 
 if [ ! -e "${DESTDIR}" ]; then
-    mkdir "${DESTDIR}"
+    echo "INFO: Creating git repository for backups at ${DESTDIR}"
+    mkdir -p "${DESTDIR}"
     cd "${DESTDIR}"
     git init
     cd -
