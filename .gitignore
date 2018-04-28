@@ -1,0 +1,6 @@
+# Project: backup-jira-db
+# File: .gitignore
+ 
+backups/
+
+# EOF
