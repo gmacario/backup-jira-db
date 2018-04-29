@@ -15,7 +15,7 @@ set -e
 JIRA_CID=$(docker ps | awk '/atlassian-jira-software/ {print $1}')
 # echo "DEBUG: JIRA_CID=${JIRA_CID}"
 
-DESTDIR="backups/$(hostname)"
+DESTDIR="bk/$(hostname)"
 # echo "DEBUG: DESTDIR=${DESTDIR}"
 
 if [ ! -e "${DESTDIR}" ]; then
