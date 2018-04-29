@@ -1,14 +1,22 @@
 #!/bin/bash
+# =====================================================================
+# Description: Backup JIRA database and attachments to a git repository
+#
+# Prerequisites:
+# - Docker
+# - Git
+# - JIRA running inside a Docker container on the same host
+# =====================================================================
 
 # set -x
 set -e
 
 # JIRA_CID="hopeful_hermann"
 JIRA_CID=$(docker ps | awk '/atlassian-jira-software/ {print $1}')
-echo "DEBUG: JIRA_CID=${JIRA_CID}"
+# echo "DEBUG: JIRA_CID=${JIRA_CID}"
 
 DESTDIR="backups/$(hostname)"
-echo "DEBUG: DESTDIR=${DESTDIR}"
+# echo "DEBUG: DESTDIR=${DESTDIR}"
 
 if [ ! -e "${DESTDIR}" ]; then
     echo "INFO: Creating git repository for backups at ${DESTDIR}"
@@ -20,9 +28,11 @@ fi
 
 NOW=$(date '+%Y-%m-%d %H:%M:%S')
 cd "${DESTDIR}"
+echo "INFO: ${0} started at ${NOW}"
+echo "INFO: JIRA Backup directory: ${PWD}"
 
-docker exec "${JIRA_CID}" sh -c "id; pwd; du -sh data export"
-docker exec "${JIRA_CID}" sh -c "tar cfz - data export" | tar xvfz -
+# docker exec "${JIRA_CID}" sh -c "id; pwd; du -sh data export"
+docker exec "${JIRA_CID}" sh -c "tar cfz - data export" | tar xfz -
 
 # TODO: See https://github.com/nabeken/docker-volume-container-rsync
 # RSYNC_CID=$(docker run -d -p 10873:873 nabeken/docker-volume-container-rsync:latest)
@@ -45,5 +55,7 @@ DESTDIR=${DESTDIR}"
 find . -type f -exec chmod -x {} \;
 git add -A
 git commit -m "Fix file mode"
+
+git status
 
 # EOF
