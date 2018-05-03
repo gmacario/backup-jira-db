@@ -43,7 +43,10 @@ docker exec "${JIRA_CID}" sh -c "tar cfz - data export" | tar xfz -
 # ...
 # docker stop ${RSYNC_CID}
 
+# Fix file mode
 find . -type f -exec chmod -x {} \;
+
+# Commit all new/modified files to the backup repository
 git add -A
 git commit -m "Created with backup-jira-db.sh
 
@@ -51,9 +54,7 @@ MIRROR_DATE=${NOW}
 JIRA_CID=${JIRA_CID}
 DESTDIR=${DESTDIR}"
 
-# Fix file mode
-find . -type f -exec chmod -x {} \; && git add -A && git commit -m "Fix file mode"
-
+# Push to remote git repository if defined
 if git remote show | grep origin; then
     git push
 fi
