@@ -57,5 +57,8 @@ git add -A
 git commit -m "Fix file mode"
 
 git status
+if [ git remote show | grep origin ]; then
+    git push
+fi
 
 # EOF
