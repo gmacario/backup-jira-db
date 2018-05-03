@@ -52,11 +52,9 @@ JIRA_CID=${JIRA_CID}
 DESTDIR=${DESTDIR}"
 
 # Fix file mode
-find . -type f -exec chmod -x {} \;
-git add -A
-git commit -m "Fix file mode"
+find . -type f -exec chmod -x {} \; && git add -A && git commit -m "Fix file mode"
 
-if [ git remote show | grep origin ]; then
+if git remote show | grep origin; then
     git push
 fi
 git status
